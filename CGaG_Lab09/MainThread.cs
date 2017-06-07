@@ -61,6 +61,17 @@ namespace CGaG_Lab09 {
                 Utils.DrawLine(SpriteBatch, new Vector2(xp, yp), new Vector2(x, y), Color.Blue);
                 yp = y;
             }
+            Vector2 bp = Vector2.Zero;
+            for (float x = 0; x < Points.Count; x += 0.01f) {
+                if (x == 0) {
+                    bp = LabUtils.CalcBezierCurve(Points.ToArray( ), x);
+                } else {
+                    Vector2 p = LabUtils.CalcBezierCurve(Points.ToArray( ), x);
+                    Utils.DrawLine(SpriteBatch, bp, p, Color.Green);
+                    bp = p;
+                }
+            }
+
             SpriteBatch.End( );
 
             base.Draw(time);
