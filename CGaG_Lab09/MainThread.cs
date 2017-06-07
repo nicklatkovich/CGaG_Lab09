@@ -1,19 +1,24 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace CGaG_Lab09 {
     public class MainThread : Game {
         GraphicsDeviceManager Graphics;
         SpriteBatch SpriteBatch;
+        Color BackgroundColor = new Color(30, 30, 30);
+
+        List<Point> Points = new List<Point>( );
 
         public MainThread( ) {
             Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            IsMouseVisible = true;
         }
 
         protected override void Initialize( ) {
-            // TODO: Add initialization logic
+            Utils.InitGraphicsDevice(GraphicsDevice);
 
             base.Initialize( );
         }
@@ -30,18 +35,28 @@ namespace CGaG_Lab09 {
         }
 
         protected override void Update(GameTime time) {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState( ).IsKeyDown(Keys.Escape))
+            Input.Update( );
+            if (Input.Keyboard.IsKeyDown(Keys.Escape)) {
                 Exit( );
+            }
 
             // TODO: Add update logic
+            if (Input.IsMouseLeftButtonPressed( )) {
+                Points.Add(Input.Mouse.Position);
+            }
 
             base.Update(time);
         }
 
         protected override void Draw(GameTime time) {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(BackgroundColor);
 
             // TODO: Add drawing code
+            SpriteBatch.Begin( );
+            foreach (var a in Points) {
+                SpriteBatch.Draw(Utils.Simple, a.ToVector2( ), color: Color.Red, scale: new Vector2(5, 5), origin: new Vector2(1, 1));
+            }
+            SpriteBatch.End( );
 
             base.Draw(time);
         }
