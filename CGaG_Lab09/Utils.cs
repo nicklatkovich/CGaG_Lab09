@@ -32,5 +32,15 @@ namespace CGaG_Lab09 {
             get; private set;
         }
 
+        public static void DrawLine(SpriteBatch sb, Vector2 start, Vector2 end, Color color, float width = 1) {
+            Vector2 edge = end - start;
+            float angle = (float)Math.Atan2(edge.Y, edge.X);
+            sb.Draw(Simple, new Rectangle(
+                    (int)start.X,
+                    (int)start.Y,
+                    (int)edge.Length( ), 1), null, color, angle, new Vector2(0, 0), SpriteEffects.None, 0);
+
+        }
+
     }
 }

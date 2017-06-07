@@ -56,6 +56,11 @@ namespace CGaG_Lab09 {
             foreach (var a in Points) {
                 SpriteBatch.Draw(Utils.Simple, a.ToVector2( ), color: Color.Red, scale: new Vector2(5, 5), origin: new Vector2(1, 1));
             }
+            for (float x = 0, xp = x, yp = 0; x < Graphics.PreferredBackBufferWidth; xp = x++) {
+                float y = LabUtils.L(Points.ToArray( ), x);
+                Utils.DrawLine(SpriteBatch, new Vector2(xp, yp), new Vector2(x, y), Color.Blue);
+                yp = y;
+            }
             SpriteBatch.End( );
 
             base.Draw(time);
